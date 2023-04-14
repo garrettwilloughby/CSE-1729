@@ -1,0 +1,41 @@
+;question 1
+
+(define (square-pair x)
+  (cons x (expt x 2)))
+
+(square-pair 10)
+
+;question 2
+
+(define (rev p)
+  (cons (cdr p) (car p)))
+
+;question 3
+
+(define (c->p p)
+ (cons (sqrt (+ (expt (car p) 2) (expt (cdr p) 2)))
+       (atan (/ (cdr p) (car p)))
+       
+       ))
+
+(c->p (cons 2 1))
+
+;question 4
+
+(define (p->c p)
+  (cons
+   (* (car p) (cos (cdr p)))
+   (* (car p) (sin (cdr p)))))
+
+;question 5
+
+(define (y p1 p2)
+  (let* ((m (/ (- (cdr p2) (cdr p1)) (- (car p2) (car p1))))
+         (b (- (cdr p1) (* m (car p1)))))
+
+    (lambda (x) (+ (* m x) b))))
+
+
+
+
+(y (cons 4 4) (cons 2 12))

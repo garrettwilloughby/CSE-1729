@@ -1,0 +1,16 @@
+;question 1a
+
+(define (create-heap v H1 H2)
+ (list v H1 H2))
+
+(define (h-min H) (car H))
+(define (left H) (cadr H))
+(define (right H) (caddr H))
+
+
+(define (heap-insert f x H)
+  (if (null? H)
+      (create-heap x '() '())
+      (if (f x h)
+          (create-heap x (left H) (right H))
+          (create-heap x (left H) (right H)))))

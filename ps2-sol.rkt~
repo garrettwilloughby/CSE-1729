@@ -1,0 +1,13 @@
+"FizzBuzz"
+
+(define (fizzbuzz x)
+  (if
+      (= (modulo x 3) 0) "fizz")
+      (= (modulo x 5) 0) "buzz")
+
+
+
+(fizzbuzz 5)
+(fizzbuzz 3)
+(fizzbuzz 15)
+(fizzbuzz 1)

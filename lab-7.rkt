@@ -1,0 +1,100 @@
+(define (make-tree value left right)
+  (list value left right))
+(define (value T) (car T))
+(define (right T) (caddr T))
+(define (left T) (cadr T))
+
+
+;question 1
+
+(define (tree-size T)
+  (if (null? T)
+      0
+     (+ 1 (tree-size (right T)) (tree-size (left T)))))
+
+(tree-size (list 15 (list) (list)))
+
+;question 2
+
+(define (tree-depth T)
+ (cond ((null? T) -1)
+  ((let* ((a (tree-depth (left T)))
+         (b (tree-depth (right T))))
+ (+ 1 (max a b))))))
+
+(tree-depth (list 99 (list 15 (list) (list)) (list)))
+
+(tree-depth (list 15 (list) (list)))
+
+;question 3
+
+(define (count-pred P tree)
+  (cond ((null? tree) 0)
+        ((P (value tree)) (+ 1 (count-pred P (left tree)) (count-pred P (right tree))))
+        ((+ (count-pred P (left tree)) (count-pred P (right tree))))))
+
+
+       
+
+(count-pred odd? (list 15 (list) (list)))
+
+
+
+;question 4
+
+
+(define (count-one-child T)
+  (let* ((a (left T))
+         (b (right T)))
+         (cond ((and (null? a) (null? b)) 0)
+               ((and (not (null? a)) (not (null? b)))
+                (+ (count-one-child a) (count-one-child b)))
+               ((null? a) (+ 1 (count-one-child b)))
+               ((+ 1 (count-one-child a))))))
+                     
+
+
+
+;question 5
+
+(define (insert x T)
+  (cond ((null? T) (make-tree x '() '()))
+        ((eq? x (value T)) T)
+        ((< x (value T)) (make-tree (value T)
+                                    (insert x (left T))
+                                    (right T)))
+        ((> x (value T)) (make-tree (value T)
+                                    (left T)
+                                    (insert x (right T))))))
+
+
+
+(define (invert-bst T)
+  (if (null? T)
+      '()
+  (make-tree (value T) (invert-bst (right T))
+             (invert-bst (left T))
+             )))
+
+
+
+(define (in-it x L)
+  (cond ((null? L)
+      #f)
+      ((eq? (car L) x) #t)))
+
+
+
+
+
+(define (rev L)
+  (if (null? L)
+      '()
+      (cons (rev (cdr L)) (list (car L)))))
+
+(rev '( 1 2 3 4 5))
+
+
+
+
+  

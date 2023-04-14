@@ -1,0 +1,97 @@
+;question 1a
+
+
+(define (list-at l i)
+  (cond ((= i 0)
+      (car l))
+      ((list-at (cdr l) (- i 1)))))
+
+;question 1b
+
+
+(define (insert x l)
+  (cond ((null? l) (list x))
+        ((< x (car l)) (cons x l)) 
+        ((cons (car l) (insert x (cdr l))))))
+
+(define (insertion-sort l)
+  (define (insertion-help a b)
+    (cond ((null? a) b)
+          ((insertion-help (cdr a) (insert (car a) b)))))
+  (insertion-help l (list)))
+
+(define (list-median l)
+  (let ((sort (insertion-sort l)))
+    (if (even? (length l))
+        ;determine where median is 
+           (/ (+ (list-at sort (floor (/ (length l) 2)))
+              (list-at sort (- (floor (/ (length l) 2)) 1))) 2)
+           (list-at sort (floor (/ (length l) 2))))))
+
+(list-median (list 0 3 4 1 9 10))
+
+
+;question 2a
+
+(define (explode x)
+  (cond ((< x 10) (list x))
+        ((append (explode (floor (/ x 10)))
+                (list (- x (* 10 (floor (/ x 10)))))))))
+
+              
+
+(explode 12345)
+
+;question 2b
+
+(define (implode l)
+  (define (ihelper l i)
+    (if (null? l)
+        0
+        (+ (* (car l) (expt 10 i))
+           (ihelper (cdr l) (+ i 1)))))
+  (ihelper (reverse l) 0))
+
+
+    
+
+;question 2c
+
+(define (sum-list list)
+    (if (null? list)
+     0
+     (+ (car list)
+        (sum-list (cdr list)))))
+
+(define (has-property x)
+  (let* ((a (explode x))
+         (sum-digits (sum-list a))
+         (sum (explode sum-digits))
+         (sum-rev (implode (reverse sum))))
+         (= (* sum-digits sum-rev) x)))
+
+;question 2d
+
+(define (find sequence test n)
+  (define (find-aux x a)
+    (let ((fx (sequence x)))
+      (if (test fx)
+             (if (= (+ a 1) n)
+                 fx
+                   (find-aux (+ x 1) (+ a 1)))
+             (find-aux (+ x 1) a))))
+    (find-aux 1 0))
+
+;problem 2e
+
+(define (fujuwara n)
+  (find (lambda (x) x) has-property n))
+
+
+
+
+        
+
+
+
+

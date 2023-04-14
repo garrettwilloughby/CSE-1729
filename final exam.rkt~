@@ -1,0 +1,21 @@
+(define (make-tree value left right)
+(list value left right))
+(define (value T) (car T))
+(define (right T) (caddr T))
+(define (left T) (cadr T))
+
+
+(define (mtree x T)
+  (cond ((null? T) T)
+        ((make-tree (* x (value T)) (mtree x (left T)) (mtree x (right T))))))
+                                       
+
+
+
+
+
+
+
+
+
+(mtree 3 '(12 (6 (3 (2 (1 () ()) ()) (5 (4 () ()) ()))(9 (7 () (8 () ())) (10 () (11 () ()))))(18 (15 (13 () (14 () ())) ())(21 (19 () (20 () ())) (27 (25 () ()) (29 () ()))))))
